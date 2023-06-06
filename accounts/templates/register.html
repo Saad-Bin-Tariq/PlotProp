@@ -1,0 +1,148 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>plotProp</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+  
+    <!-- Favicon -->
+    <link href="{% static 'accounts/img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'accounts/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'accounts/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'accounts/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'accounts/css/bootstrap.min.css'  %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static  'accounts/css/style.css' %}" rel="stylesheet">
+	
+    <!-- <link rel="stylesheet" href=
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+        <script src= 
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        </script>
+        <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+        </script>
+        <!-- <script src=
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
+        </script> -->
+   
+   <!-- <link href="{% static  'accounts/styles/style.css' %}" rel="stylesheet"> -->
+   
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+	<div class="container-xxl py-5 bg-primary hero-header mb-5">
+	<div class="spform">
+    <div class="form-structor mx-auto">
+        <div class="signup">
+            <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+            <div class="form-holder">
+                <form id="signform" method="POST" action="/acc/register/">
+					{% csrf_token %}
+					<br>
+                    <input type="text" name="username" class="input" placeholder="Username" />
+                    <input type="text" name="first_name" class="input" placeholder="First Name" />
+                    <input type="text" name="second_name" class="input" placeholder="Second Name" />
+                    <input type="email" name="email" class="input" placeholder="Email" />
+                    <input type="password" name="password" class="input" placeholder="Password" />
+					<!-- <button class="submit-btn" >Sign up</button> -->
+                </form>
+            </div>
+			{% for message in messages %}
+			<p style="color: aliceblue;">{{ message }}</p>
+			{% endfor %}
+            <button id="myButton" class="submit-btn" >Sign up</button>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+				   $("#myButton").click(function() {
+					   $("#signform").submit();
+				   });
+				});
+			</script>
+
+        
+        <div class="login slide-up">
+            <div class="center">
+                <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+                <div class="form-holder">
+					<form id="inform" action="/acc/login/" method="POST">
+					{% csrf_token %}
+                    <input name="username" type="text" class="input" placeholder="Username" />
+                    <input name="password" type="password" class="input" placeholder="Password" />
+					</form>	
+                </div>
+				{% for message in messages %}
+				<p>{{ message }}</p>
+				{% endfor %}
+                <button id="logbut" class="submit-btn">Log in</button>
+				
+				<script type="text/javascript">
+					$(document).ready(function() {
+					   $("#logbut").click(function() {
+						   $("#inform").submit();
+					   });
+					});
+				</script>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
+
+<script>
+    console.clear();
+
+const loginBtn = document.getElementById('login');
+const signupBtn = document.getElementById('signup');
+
+loginBtn.addEventListener('click', (e) => {
+	let parent = e.target.parentNode.parentNode;
+	Array.from(e.target.parentNode.parentNode.classList).find((element) => {
+		if(element !== "slide-up") {
+			parent.classList.add('slide-up')
+		}else{
+			signupBtn.parentNode.classList.add('slide-up')
+			parent.classList.remove('slide-up')
+		}
+	});
+});
+
+signupBtn.addEventListener('click', (e) => {
+	let parent = e.target.parentNode;
+	Array.from(e.target.parentNode.classList).find((element) => {
+		if(element !== "slide-up") {
+			parent.classList.add('slide-up')
+		}else{
+			loginBtn.parentNode.parentNode.classList.add('slide-up')
+			parent.classList.remove('slide-up')
+		}
+	});
+});
+</script>
+{% endblock %}

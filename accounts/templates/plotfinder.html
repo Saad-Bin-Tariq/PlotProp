@@ -1,0 +1,169 @@
+{% load static %}
+<html lang="en">
+<head>
+     <!-- Favicon -->
+     <link href="{% static 'accounts/img/favicon.ico' %}" rel="icon">
+
+     <!-- Google Web Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+ 
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+ 
+     <!-- Libraries Stylesheet -->
+     <link href="{% static 'accounts/lib/animate/animate.min.css' %}" rel="stylesheet">
+     <link href="{% static 'accounts/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+     <link href="{% static 'accounts/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+ 
+     <!-- Customized Bootstrap Stylesheet -->
+     <link href="{% static 'accounts/css/bootstrap.min.css'  %}" rel="stylesheet">
+ 
+     <!-- Template Stylesheet -->
+     <link href="{% static  'accounts/css/style.css' %}" rel="stylesheet">
+ 
+     <!-- MFS ajax -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot Finder</title>
+
+    <style>
+       
+        #map{
+            height: 100%;
+            width: 90%;
+        }
+        .navi{
+            height: 540px;
+        }
+    </style>
+   
+   
+</head>
+<body>
+    {% include 'navbar.html' %}
+  
+    
+   
+   
+            
+    <div class="container-fluid py-5 bg-primary hero-header mb-5 navi">
+        <div class="container my-5 py-5 px-lg-5">
+            
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h1 class="text-white mb-4 animated zoomIn">Find Your Plot</h1>
+                    </div>          
+        </div>
+    </div>
+   
+    
+    <div id="map" class="container-fluid rounded position-absolute top-90 start-50 translate-middle" style="z-index: 0;"></div>
+
+
+     <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.7/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    
+    
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+<script>
+
+
+var map = L.map("map").setView([33.52813, 73.14131], 3);
+var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+
+
+var pak = L.tileLayer.wms("http://localhost:8080/geoserver/SD_lab/wms", {
+        layers: 'SD_lab:DHAsecA',
+        format: 'image/png',
+        transparent: true,
+        // cql_filter: "NAME_3='Lahore'",
+        version: '1.1.0'
+        //attribution: "states"
+    });
+// pak.addTo(map);
+
+var esri =  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+googleSat.addTo(map);
+
+var baseLayers = {
+		"Streets": osm,
+        "Satellite": googleSat,
+        "Esri Sat": esri
+        
+	};
+
+    var control = new L.control.layers(baseLayers).addTo(map);
+
+$.ajax(
+  'http://localhost:8080/geoserver/SD_lab/ows?', 
+  {
+  type: 'GET',
+  data: {
+      service: 'WFS',
+      request: 'GetFeature',
+      typename: 'SD_lab:DHAsecA',
+      srsname: 'EPSG:4326',
+      outputFormat: 'text/javascript',
+     // filter: "select * from DHAsecA where id='12'", 
+  },
+  dataType: 'jsonp',
+  jsonpCallback:'callback:handleJson',
+  jsonp:'format_options',
+
+ });
+ var myStyle = {'color': 'orange'}
+function handleJson(data) {
+    selectedArea = L.geoJson(data, {
+      style: myStyle,
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup('<h4>DHA Phase 2</h4> <h6>Sectar A</h6> Plot Number:' + feature.properties.plot_no +'<br> Street:'
+        +feature.properties.street_No_ +'<br> Area (sq.m):'+feature.properties.Area +'<br> Size (Kanal):'+ feature.properties.plotsize
+        +'<br> Size (Marla):'+feature.properties.areamarla);
+      }
+    }).addTo(map);  
+
+	control.addOverlay(selectedArea, 'WFS');
+	control.addOverlay(pak, 'WMS');
+  map.fitBounds(selectedArea.getBounds());
+}
+
+
+</script>
+

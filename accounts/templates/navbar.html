@@ -1,0 +1,72 @@
+{% load static %}
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid ml-auto">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'accounts/img/pp_logo.png' %}" alt=""  height="40">
+          </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/acc/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">Map</a>
+          </li>
+          </ul>
+          <ul class="navbar-nav ml-auto ">
+          {% if user.is_authenticated %}
+          <span class="navbar-text" style="color: black;">Hi! {{ user.first_name }}</span>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/acc/logout">logout</a>
+          </li>
+        
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/acc/register">Join</a>
+          </li>
+          {% endif %}
+          </ul>
+      </div>
+    </div>
+  </nav> -->
+ 
+
+  <div class="container-xxl position-relative p-0">
+    <nav class="blur navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+          
+            <img src="{% static 'accounts/img/logo-pp.png' %}" alt=""  height="40">
+          
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="/acc/home" class="nav-item nav-link">Home</a>
+                
+                {% if user.is_authenticated %}
+                <a href="/acc/plotfinder" class="nav-item nav-link">Plot Finder</a>
+                <a href="/acc/pricefinder" class="nav-item nav-link">Price Finder</a>
+                {% if user.is_superuser %}
+                <a href="/acc/sales" class="nav-item nav-link">Sales</a>
+                {% endif %}
+                <a href="/acc/data" class="nav-item nav-link">Data Catalog</a>
+                <span class="nav-item nav-link" style="color: white;">Hi! {{ user.first_name }}</span>
+                <a href="/acc/logout" class="nav-item nav-link">Logout</a>
+                {% else %}
+                <a href="/acc/register" class="nav-item nav-link">Log In</a>
+                {% endif %}
+                </div>
+                
+            </div>
+            </div>
+    </nav>
+

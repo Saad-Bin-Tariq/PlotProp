@@ -1,0 +1,23 @@
+<filters>
+  <property_type>
+    <option>Shapefile</option>
+    <option>Raster</option>
+    
+  </property_type>
+  <price_range>
+    <option>Free</option>
+    <option>Paid</option>
+    <!-- Add more price ranges as needed -->
+  </price_range>
+  <bedrooms>
+    <option>All</option>
+    <option>DHA 1 Isb</option>
+    <option>DHA 2 Isb</option>
+    <option>Bharia Phase 4</option>
+    <option>Bharia Phase 7</option>
+    <option>Bharia Phase 8</option>
+    <option>Bharia Enclave</option>
+    <!-- Add more bedroom options as needed -->
+  </bedrooms>
+  <!-- Add more filter options as needed -->
+</filters>

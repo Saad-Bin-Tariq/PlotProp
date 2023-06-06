@@ -1,0 +1,270 @@
+{% load static %}
+<html lang="en">
+<head>
+     <!-- Favicon -->
+     <link href="{% static 'accounts/img/favicon.ico' %}" rel="icon">
+
+     <!-- Google Web Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+ 
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+ 
+     <!-- Libraries Stylesheet -->
+     <link href="{% static 'accounts/lib/animate/animate.min.css' %}" rel="stylesheet">
+     <link href="{% static 'accounts/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+     <link href="{% static 'accounts/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+ 
+     <!-- Customized Bootstrap Stylesheet -->
+     <link href="{% static 'accounts/css/bootstrap.min.css'  %}" rel="stylesheet">
+ 
+     <!-- Template Stylesheet -->
+     <link href="{% static  'accounts/css/style.css' %}" rel="stylesheet">
+ 
+     <!-- MFS ajax -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Catelog</title>
+
+    <style>
+       
+      
+        .navi{
+            height: 100px;
+        }
+    </style>
+   
+   
+</head>
+<body>
+    {% include 'navbar.html' %}
+  
+    
+   
+   
+            
+    <div class="container-fluid py-5 bg-primary  mb-5 navi">
+          
+    </div>
+    <div class="d-flex align-items-center justify-content-center" style="height: 90px; ">
+    <form method="GET" action="/acc/data" class="rounded p-3 bg-lights">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="property_type">Data Type:</label>
+              <select name="property_type" id="property_type" class="form-control rounded">
+                {% for option in property_types %}
+                  <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="price_range">Price:</label>
+              <select name="price_range" id="price_range" class="form-control rounded">
+                {% for option in price_ranges %}
+                  <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="bedrooms">Data Sets:</label>
+              <select name="bedrooms" id="bedrooms" class="form-control rounded" >
+                {% for option in bedrooms %}
+                  <option value="{{ option }}" >{{ option }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+                <br>
+                <button type="submit" class="btn btn-outline-primary py-sm-2 px-sm-3 rounded-pill animated slideInRight">Apply Filter</button>
+            </div>
+          </div>
+
+        </div>
+      
+        <!-- Add more filter options as needed -->
+      </form>
+    </div>
+
+
+
+    
+      
+
+    <div class="container-xxl py-5">
+        <div class="container px-lg-5">
+            <div class=" position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="position-relative d-inline text-primary ps-4">Our Services</h6>
+                <h2 class="mt-2">Data We Provide</h2>
+            </div>
+            <div class="row g-4">
+                {% if loc == "DHA 1 Isb" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">DHA Phase 1 Islamabad</h5>
+                        <p>Number of Parcels: 8095 <br>Attributes: Plotno, St, Sector, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% elif loc == "DHA 2 Isb" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">DHA Phase 2 Islamabad</h5>
+                        <p>Number of Parcels: 1163 <br>Attributes: Plotno, St, Sector, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="http://localhost:8080/geoserver/SD_lab/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=SD_lab%3ADHAsecA&maxFeatures=50&outputFormat=SHAPE-ZIP">Download</a>
+                    </div> 
+                </div>
+                {% elif loc == "Bharia Phase 4" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 7 Islamabad</h5>
+                        <p>Number of Parcels: 1003 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% elif loc == "Bharia Phase 7" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 4 Islamabad</h5>
+                        <p>Number of Parcels: 1420 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% elif loc == "Bharia Phase 8" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 8 Islamabad</h5>
+                        <p>Number of Parcels: 1856 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% elif loc == "Bharia Enclave" %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Enclave Islamabad</h5>
+                        <p>Number of Parcels: 2503 <br>Attributes: Plotno, St, Block, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">DHA Phase 1 Islamabad</h5>
+                        <p>Number of Parcels: 8095 <br>Attributes: Plotno, St, Sector, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">DHA Phase 2 Islamabad</h5>
+                        <p>Number of Parcels: 1163 <br>Attributes: Plotno, St, Sector, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="http://localhost:8080/geoserver/SD_lab/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=SD_lab%3ADHAsecA&maxFeatures=50&outputFormat=SHAPE-ZIP">Download</a>
+                    </div> 
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 7 Islamabad</h5>
+                        <p>Number of Parcels: 1003 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 4 Islamabad</h5>
+                        <p>Number of Parcels: 1420 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Phase 8 Islamabad</h5>
+                        <p>Number of Parcels: 1856 <br>Attributes: Plotno, St, Phase, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fa fa-home fa-2x"></i>
+                        </div>
+                        <h5 class="mb-3">Bharia Enclave Islamabad</h5>
+                        <p>Number of Parcels: 2503 <br>Attributes: Plotno, St, Block, Area <br>Format: Shapefile</p>
+                        <a class="btn px-3 mt-auto mx-auto" href="">Available Soon</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    
+    
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+
